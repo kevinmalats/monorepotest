@@ -48,8 +48,21 @@ export default class Store {
                 },
             });
             console.log("residd", result)
-            if(!result || result.password !== password || result.loged)       
+            if(result.attempts >= 3)       
+                throw new Error('Usuario bloqueado por varios reintentos')
+            
+            if(!result || result.password !== password ){
+                const id = result.id
+                const attempts = result.attempts + 1 || 1
+                const data = {attempts}
+                await model.update(data, {where:{id}})
                 throw new Error('Credenciales invalidas')
+            }       
+                
+            if(result.loged)       
+                throw new Error('El usuario ya tiene una sesion iniciada')
+
+
             console.log("que pas",result)
             return result;
         } catch (error) {

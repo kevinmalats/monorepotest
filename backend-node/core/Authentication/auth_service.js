@@ -20,7 +20,8 @@ export default class AuthService{
           console.log("useroiposa",user)
           await this.store.update(User, user.id,user_active)
           const token = this.tokenService.generateToken(user);
-          const dtouser =  {token,
+          const dtouser =  {
+            token,
             username:user.username,
             id:user.id
           }

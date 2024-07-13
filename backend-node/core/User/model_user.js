@@ -19,6 +19,10 @@ const User = sequelize.define('User', {
         type: DataTypes.BOOLEAN,
         allowNull: true,
     },
+    attempts: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
     email: {
         type: DataTypes.STRING,
         allowNull: false,
