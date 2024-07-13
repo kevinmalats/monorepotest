@@ -1,24 +1,53 @@
 import { TABLE_ENUM } from "../../app/constans/table_enum.js"
 import Store from "../../app/gateway/store.js"
 import User from "./model_user.js";
+import Person from "../Person/model_person.js";
 export default class UserService{
     constructor(){
         this.store = new Store()
         this.tableName = TABLE_ENUM.USER;
     }
-    async create(data){
+    async _verifyEmail(email){
       try {
-        console.log("tablename",this.tableName)
+        const query = {email}
+        const result = await this.store.read_only(User, query)
+        console.log("verify", result)
+        console.log("verifyresult", result.length !== 0)
+        return result.length !== 0
+        
+      } catch (error) {
+        
+      }
+    }
+    async create(data){
+      
+      console.log("datausuaroi", data)
+      try {
+        const verify = await this._verifyEmail(data.email)
+        if(verify){
+          const [email, domain] = data.email.split("@")
+          console.log("email",email)
+          const randomNumber = Math.floor(Math.random() * (100 - 0+ 1)) + 0;
+          data.email = `${email}${randomNumber}@${domain}`
+          return await this.create(data)
+        }
+        else{       
         const result = await this.store.save(this.tableName, data)
         return result
+      }
       } catch (error) {
         console.log(error)
       }
     }
     async get(){
         try {
-          const result = await this.store.read(User)
-          console.log("result",result)
+          const query = {
+            include: [
+              { model: Person, as:'Person' }
+           ]
+          }
+          const result = await this.store.read_all(User, query)
+          console.log("resultado",result)
           return result
         } catch (error) {
           console.log(error)
@@ -26,7 +55,7 @@ export default class UserService{
       }
       async find(query){
         try {
-          const result = await this.store.read(User, query)
+          const result = await this.store.read_only(User, query)
           console.log("result",result)
           return result
         } catch (error) {

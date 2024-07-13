@@ -1,5 +1,6 @@
 import sequelize  from "../db/db_connection.js";
-import { DataTypes, where } from 'sequelize';
+import { DataTypes } from 'sequelize';
+import { Op } from 'sequelize';
 
 export default class Store {
     constructor(){
@@ -16,13 +17,44 @@ export default class Store {
         }
    
     }
-    async read(model, query = {}) {
+    async read_all(model, query = {}) {
+        try {
+            const result = await model.findAll({ query });
+            console.log(`Datos leídos de la consulta:`, result);
+            return result;
+        } catch (error) {
+            console.error('Error al leer los datos:', error);
+        }
+    }
+
+    async read_only(model, query = {}) {
         try {
             const result = await model.findAll({ where: query });
             console.log(`Datos leídos de la consulta:`, result);
             return result;
         } catch (error) {
             console.error('Error al leer los datos:', error);
+        }
+    }
+    async auth(model, login,password) {
+        try {
+            const result = await model.findOne({
+                where: {
+                    [Op.or]: [
+                        { username: login },
+                        { email: login },
+                    ],
+                    
+                },
+            });
+            console.log("residd", result)
+            if(!result || result.password !== password || result.loged)       
+                throw new Error('Credenciales invalidas')
+            console.log("que pas",result)
+            return result;
+        } catch (error) {
+            console.error('Error al leer los datos:', error);
+            throw new Error(error.message)
         }
     }
     async update(model, id, data) {
@@ -47,7 +79,7 @@ export default class Store {
         try {
             const result = await model.findByPk(id);
             if(result){
-                await model.destroy();
+                await model.destroy( {where:{id}});
                 return "usuario eliminado correctamente"
             }else{
                 return "usuario no ha sido encontrado"

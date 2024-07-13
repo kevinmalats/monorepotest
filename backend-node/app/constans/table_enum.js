@@ -1,3 +1,4 @@
 export const TABLE_ENUM = {
-    USER:"user"
+    USER:"user",
+    PERSON:"person"
 }
