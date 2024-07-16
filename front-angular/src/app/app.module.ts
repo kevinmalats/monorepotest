@@ -8,11 +8,13 @@ import { AuthService } from './services/auth_service';
 import { HttpCustomer } from '../gateway/httpCustomer';
 import { StorageService } from './services/storage_service';
 import { HomeComponent } from './home/home.component';
+import { LayoutComponent } from './layout/layout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    LayoutComponent
   ],
   imports: [
     BrowserModule,

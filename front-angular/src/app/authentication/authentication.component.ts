@@ -43,4 +43,7 @@ export class AuthenticationComponent {
   goToHome(){
     this.router.navigate(["home"])
   }
+  goToForgot(){
+    this.router.navigate(["auth/forgot"])
+  }
 }
