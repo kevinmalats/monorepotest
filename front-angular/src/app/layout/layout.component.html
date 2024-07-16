@@ -1,13 +1,26 @@
 <div class="min-h-screen flex flex-col">
     <!-- Header -->
     <header class="bg-blue-500 text-white p-4">
-      <h1 class="text-2xl">My Application</h1>
+      <h1 class="text-2xl">Test viamatica</h1>
     </header>
   
-    <!-- Main Content -->
-    <main class="flex-grow p-4">
-      <router-outlet></router-outlet>
-    </main>
+    <!-- Main Content Area with Sidebar -->
+    <div class="flex flex-grow">
+      <!-- Sidebar -->
+      <aside class="w-64 bg-gray-200 p-4">
+        <nav>
+          <ul>
+            <li class="mb-2"><a href="/home" class="text-gray-700 hover:text-gray-900">Home</a></li>
+            <li class="mb-2"><a href="/user" class="text-gray-700 hover:text-gray-900">Usuarios</a></li>
+          </ul>
+        </nav>
+      </aside>
+  
+      <!-- Main Content -->
+      <main class="flex-grow p-4">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
   
     <!-- Footer -->
     <footer class="bg-gray-800 text-white p-4 text-center">

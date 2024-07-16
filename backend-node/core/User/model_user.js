@@ -39,7 +39,37 @@ const User = sequelize.define('User', {
     tableName: 'user',
     timestamps: false,
 });
+const Session = sequelize.define('User', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    state: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    date_begin: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
+    date_end: {
+        type: DataTypes.DATE,
+        allowNull: true,
+    },
+    user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+
+}, {
+    tableName: 'sessions',
+    timestamps: false,
+});
 User.belongsTo(Person, { foreignKey: 'person_id' });
 Person.hasMany(User, { foreignKey: 'person_id' });
+
+Session.belongsTo(User, { foreignKey: 'user_id' });
+User.hasMany(Session, { foreignKey: 'user_id' });
 
 export default User;

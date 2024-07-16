@@ -16,8 +16,12 @@ export class ExcelImportService {
         const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
         const wsname: string = wb.SheetNames[0];
         const ws: XLSX.WorkSheet = wb.Sheets[wsname];
-        const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
-        resolve(data);
+        const data = XLSX.utils.sheet_to_json(ws);
+        const header = data[0]
+        const dataresutl = [...data]
+        dataresutl.shift()
+        const response:any = {header:header, data:dataresutl}
+        resolve(response);
       };
       reader.onerror = (error) => reject(error);
       reader.readAsBinaryString(file);

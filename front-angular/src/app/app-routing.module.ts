@@ -14,6 +14,10 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
+      {
+        path:"user",
+        loadChildren:()=>import("./users/users.module").then(m=>m.UsersModule)
+      },
     ]
   },
 ];

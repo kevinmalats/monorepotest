@@ -14,7 +14,7 @@ export class AuthService{
         return await this.httpCustomer.post(`${this.endPoint}/login`,data)
     }
 
-    async  sendPasswordRecoveryEmail(email: string){
-        return await this.httpCustomer.post(`${this.endPoint}/recovery`, { email });
+    async  sendPasswordRecoveryEmail(data: any){
+        return await this.httpCustomer.post(`${this.endPoint}/recovery`,data);
       }
 }

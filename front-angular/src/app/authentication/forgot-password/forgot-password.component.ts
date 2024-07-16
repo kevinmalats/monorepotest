@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth_service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,10 +17,13 @@ export class ForgotPasswordComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private passwordRecoveryService: AuthService
+    private passwordRecoveryService: AuthService,
+    private router: Router 
   ) {
     this.passwordRecoveryForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmpassword: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
@@ -31,14 +35,19 @@ export class ForgotPasswordComponent {
 
   onSubmit(): void {
     this.submitted = true;
-
-    if (this.passwordRecoveryForm.invalid) {
+console.log( this.passwordRecoveryForm.value.password !== this.passwordRecoveryForm.value.confirmpassword)
+    if (this.passwordRecoveryForm.invalid || 
+      this.passwordRecoveryForm.value.password !== this.passwordRecoveryForm.value.confirmpassword) {
       return;
     }
 
-    const email = this.passwordRecoveryForm.value.email;
-    this.passwordRecoveryService.sendPasswordRecoveryEmail(email).then((response)=>{
+    const data = this.passwordRecoveryForm.value;
+    this.passwordRecoveryService.sendPasswordRecoveryEmail(data).then((response)=>{
       console.log(response)
+      if(response.error){
+        alert(response.error)
+      }else
+      this.router.navigate(["auth"])
     })
   
   }

@@ -8,6 +8,7 @@ export default class AuthService{
         this.tableName = TABLE_ENUM.USER;
         this.tokenService = new TokenService()
     }
+
       async login(data){
         try {
           const login = data.email || data.username

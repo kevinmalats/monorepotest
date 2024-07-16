@@ -7,7 +7,7 @@ export default class UserService{
         this.store = new Store()
         this.tableName = TABLE_ENUM.USER;
     }
-    async _verifyEmail(email){
+    async verifyEmail(email){
       try {
         const query = {email}
         const result = await this.store.read_only(User, query)
@@ -19,11 +19,12 @@ export default class UserService{
         
       }
     }
+    
     async create(data){
       
       console.log("datausuaroi", data)
       try {
-        const verify = await this._verifyEmail(data.email)
+        const verify = await this.verifyEmail(data.email)
         if(verify){
           const [email, domain] = data.email.split("@")
           console.log("email",email)

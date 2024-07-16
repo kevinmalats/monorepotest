@@ -32,4 +32,28 @@ export class HttpCustomer{
             return error
         }
     }
+
+    async postBulk(endpoint: string, dataArray: any[]) {
+        try {
+          const requests = dataArray.map(data => {
+            const options = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            };
+      
+            return fetch(`${this.url}/${endpoint}`, options)
+              .then(response => response.json())
+              .catch(error => ({ error }));
+          });
+      
+          const responses = await Promise.all(requests);
+          return responses;
+        } catch (error) {
+          return error;
+        }
+      }
+      
 }
