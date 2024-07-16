@@ -31,6 +31,9 @@ export default class UserController {
     async getById(id){
         return await this.service.find({id})
       }
+      async consultInfo(id){
+        return await this.service.consult(id)
+      }
       async update(id, data){
         return await this.service.update(id,data)
       }

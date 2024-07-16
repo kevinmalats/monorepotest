@@ -13,4 +13,7 @@ export class StorageService{
     getSession(){
         return JSON.parse(sessionStorage.getItem("user")!)
     }
+    clearSession(){
+        return sessionStorage.removeItem("user")
+    }
 }

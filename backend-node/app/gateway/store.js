@@ -8,6 +8,7 @@ export default class Store {
     }
     async save(tableName,data){
         try {
+            console.log("guardandoddd",data)
             const model = this.getModel(tableName, data);
             const result = await model.create(data);
             console.log(`Datos insertados en la tabla ${tableName}:`, result);
@@ -19,6 +20,7 @@ export default class Store {
     }
     async read_all(model, query = {}) {
         try {
+            console.log("alll", query)
             const result = await model.findAll({ query });
             console.log(`Datos leídos de la consulta:`, result);
             return result;
@@ -30,7 +32,7 @@ export default class Store {
     async read_only(model, query = {}) {
         try {
             const result = await model.findAll({ where: query });
-            console.log(`Datos leídos de la consulta:`, result);
+           // console.log(`Datos leídos de la consulta:`, result);
             return result;
         } catch (error) {
             console.error('Error al leer los datos:', error);
@@ -47,7 +49,9 @@ export default class Store {
                     
                 },
             });
-            console.log("residd", result)
+            if(result === null)
+                throw new Error('Credenciales invalidas')
+               
             if(result.attempts >= 3)       
                 throw new Error('Usuario bloqueado por varios reintentos')
             
@@ -62,8 +66,6 @@ export default class Store {
             if(result.loged)       
                 throw new Error('El usuario ya tiene una sesion iniciada')
 
-
-            console.log("que pas",result)
             return result;
         } catch (error) {
             console.error('Error al leer los datos:', error);
@@ -74,7 +76,7 @@ export default class Store {
         try {
             console.log("findByPk", id)
             const result = await model.findByPk(id);
-            console.log("resultado",result)
+            //console.log("resultadoupdate",result)
             if (result){
                  await model.update(data, {where:{id}})
                 return result;

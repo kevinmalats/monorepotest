@@ -28,6 +28,9 @@ importers:
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
+      moment:
+        specifier: ^2.30.1
+        version: 2.30.1
       nodemailer:
         specifier: ^6.9.14
         version: 6.9.14
@@ -80,6 +83,9 @@ importers:
       file-saver:
         specifier: ^2.0.5
         version: 2.0.5
+      moment:
+        specifier: ^2.30.1
+        version: 2.30.1
       rxjs:
         specifier: ~7.8.0
         version: 7.8.1

@@ -11,6 +11,7 @@ import  UserController  from './controller_user.js';
         this.router.post('/', this.createUser.bind(this));
         this.router.get('/', this.getUsers.bind(this));
         this.router.get('/:id', this.getUserById.bind(this));
+        this.router.get('/info/:id', this.consultInfoSession.bind(this));
         this.router.put('/:id', this.updateUser.bind(this));
         this.router.delete('/:id', this.deleteUser.bind(this));
     }
@@ -42,6 +43,21 @@ import  UserController  from './controller_user.js';
             const user = await this.controller.getById( id );
             if (user.length) {
                 res.status(200).json(user[0]);
+            } else {
+                res.status(404).json({ error: 'Usuario no encontrado' });
+            }
+        } catch (error) {
+            res.status(500).json({ error: 'Error al obtener el usuario' });
+        }
+    }
+
+    async consultInfoSession(req, res) {
+        const { id } = req.params;
+        console.log("idddd",id)
+        try {
+            const sessions = await this.controller.consultInfo( id );
+            if (sessions.length) {
+                res.status(200).json(sessions);
             } else {
                 res.status(404).json({ error: 'Usuario no encontrado' });
             }

@@ -13,5 +13,8 @@ export class UserService{
     async saveUsers(data:any){
         return await this.httpCustomer.postBulk(`${this.endPoint}`,data)
     }
+    async consultInfo(id:any){
+        return await this.httpCustomer.get(`${this.endPoint}/info`,id)
+    }
 
 }

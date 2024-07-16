@@ -1,4 +1,4 @@
-import generateAlphanumericCode from "../../app/helper/utili.js";
+import generateAlphanumericCode from "../../app/util/utili.js";
 import EmailService from "../../app/middlewares/email.js";
 import UserService from "../User/service_user.js";
 import  AuthService  from "./auth_service.js";
@@ -12,6 +12,10 @@ export default class AuthController {
     async login(data){
       return await this.service.login(data)
     }
+    async logout(id){
+      return await this.service.logout(id)
+    }
+
     async recovery(data){
       const { email, password } = data
       const isExistEmail =   await this.userService.verifyEmail(email)

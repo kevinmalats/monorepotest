@@ -2,6 +2,7 @@ import { TABLE_ENUM } from "../../app/constans/table_enum.js"
 import Store from "../../app/gateway/store.js"
 import User from "./model_user.js";
 import Person from "../Person/model_person.js";
+import Session from "./model_session.js";
 export default class UserService{
     constructor(){
         this.store = new Store()
@@ -58,6 +59,22 @@ export default class UserService{
         try {
           const result = await this.store.read_only(User, query)
           console.log("result",result)
+          return result
+        } catch (error) {
+          console.log(error)
+        }
+      }
+      async consult(id){
+        try {
+          console.log("idddd",id)
+          const query = {
+            where: { userId: id },
+            include: [
+              { model: User, as:'User' }
+           ]
+          }
+          const result = await this.store.read_all(Session, query)
+          console.log("resuktadors",result)
           return result
         } catch (error) {
           console.log(error)

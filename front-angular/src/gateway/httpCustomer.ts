@@ -8,14 +8,19 @@ export class HttpCustomer{
     constructor(){
          this.url = environment.url
     }
-    async get(endpoint:string, params = null){
+    async get(endpoint: string, params = null) {
         try {
-            const response = await fetch(`${this.url}/${endpoint}`)
-            return await response.json()
+            // Construir la URL con los parámetros de consulta si existen
+            const url = new URL(`${this.url}/${endpoint}/${params}`);
+    
+            const response = await fetch(url.toString());
+            console.log(response)
+            return await response.json();
         } catch (error) {
-            return error
+            return { error: error };
         }
     }
+    
 
     async post(endpoint:string, data:any){
         try {
